@@ -1,24 +1,31 @@
+var express = require("express");
 var http = require("http");
+var app = express();
 
-var app = http.createServer(function(request, response) {
-	response.writeHead(200, {
-		"Content-Type": "text/plain"
-	});
-	response.end("Hello world!");
+app.all("*", function(request, response, next) {
+  response.writeHead(200, { "Content-Type": "text/plain" });
+  next();
 });
 
-app.listen(3000, "localhost");
+app.get("/", function(request, response) {
+  response.end("Welcome to the homepage!");
+});
 
-// var express = require('express');
-// var app = express();
-// var routes = require('./routes');
+app.get("/about", function(request, response) {
+  response.end("Welcome to the about page!");
+});
 
-// routes(app)
-// app.listen(3000);
+app.get("*", function(request, response) {
+  response.end("404!");
+});
+
+http.createServer(app).listen(3000);
 
 
 
-// var express = require('express');
+
+
+// var express = require('express');	
 // var app = express();
 
 // app.use(express.static(__dirname + '/public'));
